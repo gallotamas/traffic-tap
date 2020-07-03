@@ -1,15 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
+
 import './index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { configureApolloClient } from './configure-apollo-client';
 
 
-const client = new ApolloClient({
-  uri: '/api/graphql',
-});
+const client = configureApolloClient({ basePath: '/api/graphql' });
 
 ReactDOM.render(
   <React.StrictMode>
