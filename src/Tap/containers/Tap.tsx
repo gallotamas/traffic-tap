@@ -4,7 +4,7 @@ import { useQuery, useSubscription } from '@apollo/react-hooks';
 import Filters from './Filters/Filters';
 import { Namespace } from '../../models/Namespace';
 import { AccessLog } from '../../models/AccessLog';
-import AccessLogsList from '../../components/AccessLogsList/AccessLogsList';
+import AccessLogsList from '../components/AccessLogsList/AccessLogsList';
 import { Identifiable } from '../../models/Identifiable';
 import { Button, SHAPE } from 'baseui/button';
 import { TriangleRight, Grab } from 'baseui/icon';

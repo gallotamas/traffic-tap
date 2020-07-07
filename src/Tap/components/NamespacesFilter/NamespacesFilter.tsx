@@ -1,20 +1,15 @@
 import React, { FunctionComponent } from 'react';
 import { Select, OnChangeParams } from 'baseui/select';
-import { Namespace } from '../../models/Namespace';
-import { SelectConfig } from '../../models/SelectConfig';
+import { Namespace, SelectConfig } from '../../../models';
 
-interface ResourceFilterProps {
+interface NamespacesFilterProps {
     namespaces: Namespace[];
     config: SelectConfig;
     changed: (params: OnChangeParams, elementId: string) => any;
 }
 
-const ResourceFilter: FunctionComponent<ResourceFilterProps> = (props) => {
-    const workloads = props.namespaces.flatMap(namespace => namespace.workloads);
-    const options = workloads.map(res => ({
-        id: `${res.namespace}:${res.name}`,
-        label: `${res.namespace}/${res.name}`
-    }));
+const NamespacesFilter: FunctionComponent<NamespacesFilterProps> = (props) => {
+    const options = props.namespaces.map(ns => ({ id: ns.id, label: ns.name }));
 
     return (
         <React.Fragment>
@@ -29,4 +24,4 @@ const ResourceFilter: FunctionComponent<ResourceFilterProps> = (props) => {
     );
 }
 
-export default ResourceFilter;
+export default NamespacesFilter;

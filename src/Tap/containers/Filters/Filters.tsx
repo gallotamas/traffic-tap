@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState } from 'react';
-import NamespacesFilter from '../../../components/NamespacesFilter/NamespacesFilter';
-import ResourceFilter from '../../../components/ResourceFilter/ResourceFilter';
+import NamespacesFilter from '../../components/NamespacesFilter/NamespacesFilter';
+import ResourceFilter from '../../components/ResourceFilter/ResourceFilter';
 import { Namespace } from '../../../models/Namespace';
 import { OnChangeParams } from 'baseui/select';
 import { SelectConfig } from '../../../models/SelectConfig';

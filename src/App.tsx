@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Tap from './containers/Tap/Tap';
+import Tap from './Tap/containers/Tap';
 
 function App() {
   return (

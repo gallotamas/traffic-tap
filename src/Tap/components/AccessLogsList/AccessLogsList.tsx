@@ -5,8 +5,7 @@ import {
     StyledHeadCell,
     StyledBodyCell,
   } from 'baseui/table-grid';
-import { AccessLog } from '../../models/AccessLog';
-import { Identifiable } from '../../models/Identifiable';
+import { AccessLog, Identifiable } from '../../../models';
 
 interface AccessLogsListProps {
     accessLogs: (AccessLog & Identifiable)[];
