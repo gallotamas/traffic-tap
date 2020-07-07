@@ -8,6 +8,7 @@ import AccessLogsList from '../components/AccessLogsList/AccessLogsList';
 import { Identifiable } from '../../models/Identifiable';
 import { Button, SHAPE } from 'baseui/button';
 import { TriangleRight, Grab } from 'baseui/icon';
+import { RouteComponentProps } from 'react-router-dom';
 
 const NAMESPACES_QUERY = gql`
   fragment NamespaceFragment on IstioNamespace {
@@ -97,7 +98,7 @@ const ACCESS_LOGS_SUBSCRIPTION = gql`
 
 const REPORTER_NAMESPACE = 'backyards-demo';
 
-function Tap() {
+function Tap(props: RouteComponentProps) {
     const [allAccessLogs, setAllAccessLogs] = useState<(AccessLog & Identifiable)[]>([]);
     const [isStreaming, setIsStreaming] = useState<boolean>(true);
 

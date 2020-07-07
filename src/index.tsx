@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { Client as Styletron } from 'styletron-engine-atomic';
 import { Provider as StyletronProvider } from 'styletron-react';
@@ -18,7 +19,9 @@ ReactDOM.render(
     <StyletronProvider value={engine}>
       <BaseProvider theme={LightTheme}>
         <ApolloProvider client={apolloClient}>
-          <App />
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
         </ApolloProvider>
       </BaseProvider>
     </StyletronProvider>,
