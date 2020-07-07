@@ -14,15 +14,15 @@ const engine = new Styletron();
 const apolloClient = configureApolloClient({ basePath: '/api/graphql' });
 
 ReactDOM.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <StyletronProvider value={engine}>
       <BaseProvider theme={LightTheme}>
         <ApolloProvider client={apolloClient}>
           <App />
         </ApolloProvider>
       </BaseProvider>
-    </StyletronProvider>
-  </React.StrictMode>,
+    </StyletronProvider>,
+  // </React.StrictMode>,
   document.getElementById('root')
 );
 

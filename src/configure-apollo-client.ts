@@ -18,6 +18,7 @@ export function configureApolloClient({ basePath }: { basePath: string }) {
         uri: `ws://${window.location.host}${basePath}`,
         options: {
             reconnect: true,
+            lazy: true,
         }
     });
 
