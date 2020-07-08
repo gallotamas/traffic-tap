@@ -1,15 +1,17 @@
 import { Value } from 'baseui/select';
+import { FunctionComponent } from 'react';
 
 export interface SelectConfig {
-    id: string;
+    component: FunctionComponent<any>;
+    options: any;
     elementConfig: {
-        placeholder?: string,
-        multi?: boolean,
-    },
-    value: Value,
+        placeholder?: string;
+        multi?: boolean;
+    };
+    value: Value;
     validation: {
-        required: boolean,
-    },
-    valid: boolean,
-    touched: boolean,
+        required: boolean;
+    };
+    valid: boolean;
+    classes: string;
 }

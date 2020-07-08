@@ -5,24 +5,30 @@ import { Namespace, SelectConfig } from '../../../models';
 interface ResourceFilterProps {
     namespaces: Namespace[];
     config: SelectConfig;
-    changed: (params: OnChangeParams, elementId: string) => any;
+    changed: (params: OnChangeParams) => any;
 }
 
 const ResourceFilter: FunctionComponent<ResourceFilterProps> = (props) => {
+    const namespaceOptions = props.namespaces.map(namespace => ({
+        id: namespace.name,
+        label: namespace.name,
+        type: 'NAMESPACE',
+    }));
     const workloads = props.namespaces.flatMap(namespace => namespace.workloads);
-    const options = workloads.map(res => ({
-        id: `${res.namespace}:${res.name}`,
-        label: `${res.namespace}/${res.name}`
+    const workloadOptions = workloads.map(workload => ({
+        id: `${workload.namespace}:${workload.name}`,
+        label: `${workload.namespace}/${workload.name}`,
+        type: 'WORKLOAD',
     }));
 
     return (
         <React.Fragment>
             <Select
-                options={options}
+                options={namespaceOptions.concat(workloadOptions)}
                 value={props.config.value}
-                error={props.config.valid}
+                error={!props.config.valid}
                 {...props.config.elementConfig}
-                onChange={(params) => props.changed(params, props.config.id)}
+                onChange={(params) => props.changed(params)}
             />
         </React.Fragment>
     );

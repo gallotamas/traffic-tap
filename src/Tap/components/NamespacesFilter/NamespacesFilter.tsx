@@ -5,7 +5,7 @@ import { Namespace, SelectConfig } from '../../../models';
 interface NamespacesFilterProps {
     namespaces: Namespace[];
     config: SelectConfig;
-    changed: (params: OnChangeParams, elementId: string) => any;
+    changed: (params: OnChangeParams) => any;
 }
 
 const NamespacesFilter: FunctionComponent<NamespacesFilterProps> = (props) => {
@@ -16,9 +16,9 @@ const NamespacesFilter: FunctionComponent<NamespacesFilterProps> = (props) => {
             <Select
                 options={options}
                 value={props.config.value}
-                error={props.config.valid}
+                error={!props.config.valid}
                 {...props.config.elementConfig}
-                onChange={(params) => props.changed(params, props.config.id)}
+                onChange={(params) => props.changed(params)}
             />
         </React.Fragment>
     );
