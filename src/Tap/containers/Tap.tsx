@@ -6,9 +6,10 @@ import { Namespace } from '../../models/Namespace';
 import { AccessLog } from '../../models/AccessLog';
 import AccessLogsList from '../components/AccessLogsList/AccessLogsList';
 import { Identifiable } from '../../models/Identifiable';
-import { Button, SHAPE } from 'baseui/button';
-import { TriangleRight, Grab } from 'baseui/icon';
 import { RouteComponentProps } from 'react-router-dom';
+import PlayPauseButton from '../components/PlayPauseButton/PlayPauseButton';
+import { Card, StyledBody } from 'baseui/card';
+import classes from './Tap.module.scss';
 
 const NAMESPACES_QUERY = gql`
   fragment NamespaceFragment on IstioNamespace {
@@ -102,7 +103,7 @@ function Tap(props: RouteComponentProps) {
     const [allAccessLogs, setAllAccessLogs] = useState<(AccessLog & Identifiable)[]>([]);
     const [isStreaming, setIsStreaming] = useState<boolean>(true);
 
-    const { data: { namespaces } = { namespaces: [] } } = useQuery<{ namespaces: Namespace[] }>(NAMESPACES_QUERY);
+    const { data: { namespaces } = { namespaces: [] } } = useQuery<{ namespaces: Namespace[] }>(NAMESPACES_QUERY, {pollInterval: 5000});
 
     const { data: { accessLogs } = { accessLogs: null } } = useSubscription<{ accessLogs: AccessLog }>(
         ACCESS_LOGS_SUBSCRIPTION,
@@ -124,15 +125,17 @@ function Tap(props: RouteComponentProps) {
 
     return (
         <React.Fragment>
-            <Filters namespaces={namespaces}></Filters>
-            <Button shape={SHAPE.round} onClick={toggleStream}>
-                {
-                    isStreaming
-                        ? <Grab overrides={ { Svg: { style: { transform: 'rotate(90deg)' } } } } size={28} />
-                        :<TriangleRight size={28} />
-                }
-            </Button>
-            <AccessLogsList accessLogs={allAccessLogs}></AccessLogsList>
+            <Card title="Filters">
+                <StyledBody>
+                    <header className={classes.Header}>
+                        <span className={classes.Filters}><Filters namespaces={namespaces} /></span>
+                        <span className={classes.PlayPauseButton}><PlayPauseButton isStreaming={isStreaming} onToggle={toggleStream} /></span>
+                    </header>
+                </StyledBody>
+            </Card>
+            <div className={classes.AccessLogsList}>
+                <AccessLogsList accessLogs={allAccessLogs}></AccessLogsList>
+            </div>
         </React.Fragment>
     );
 }

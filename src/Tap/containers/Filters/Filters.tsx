@@ -1,9 +1,10 @@
 import React, { FunctionComponent, useState } from 'react';
+import { OnChangeParams } from 'baseui/select';
 import NamespacesFilter from '../../components/NamespacesFilter/NamespacesFilter';
 import ResourceFilter from '../../components/ResourceFilter/ResourceFilter';
 import { Namespace } from '../../../models/Namespace';
-import { OnChangeParams } from 'baseui/select';
 import { SelectConfig } from '../../../models/SelectConfig';
+import classes from './Filters.module.scss';
 
 interface FiltersProps {
     namespaces: Namespace[];
@@ -58,23 +59,26 @@ const Filters: FunctionComponent<FiltersProps> = (props) => {
     }
 
     return (
-        <React.Fragment>
-            <NamespacesFilter
-                namespaces={props.namespaces}
-                config={filters.namespaces}
-                changed={filterChanged}>
-            </NamespacesFilter>
-            <ResourceFilter
-                namespaces={props.namespaces.filter(ns => !!filters.namespaces.value.find((selected) => selected.id === ns.id))}
-                config={filters.resource}
-                changed={filterChanged}>
-            </ResourceFilter>
-            <ResourceFilter
-                namespaces={props.namespaces.filter(ns => !!filters.namespaces.value.find((selected) => selected.id === ns.id))}
-                config={filters.destinationResource}
-                changed={filterChanged}>
-            </ResourceFilter>
-        </React.Fragment>
+        <div className={classes.Layout}>
+            <div className={classes.NamespacesFilter}>
+                <NamespacesFilter
+                    namespaces={props.namespaces}
+                    config={filters.namespaces}
+                    changed={filterChanged} />
+            </div>
+            <div className={classes.ResourceFilter}>
+                <ResourceFilter
+                    namespaces={props.namespaces.filter(ns => !!filters.namespaces.value.find((selected) => selected.id === ns.id))}
+                    config={filters.resource}
+                    changed={filterChanged} />
+            </div>
+            <div className={classes.DestinationResourceFilter}>
+                <ResourceFilter
+                    namespaces={props.namespaces.filter(ns => !!filters.namespaces.value.find((selected) => selected.id === ns.id))}
+                    config={filters.destinationResource}
+                    changed={filterChanged} />
+            </div>
+        </div>
     );
 }
 

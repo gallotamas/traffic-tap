@@ -1,0 +1,21 @@
+$space-between: 20px;
+
+.Layout {
+    display: flex;
+    flex-direction: row;
+}
+
+.NamespacesFilter {
+    flex: 6;
+    margin-right: $space-between;
+    min-width: 300px;
+}
+
+.ResourceFilter {
+    flex: 3;
+}
+
+.DestinationResourceFilter {
+    flex: 3;
+    margin-left: $space-between;
+}

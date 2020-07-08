@@ -1,9 +1,7 @@
 import React, { Suspense } from 'react';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 
-const Tap = React.lazy(() => {
-    return import('./Tap/containers/Tap');
-});
+const Tap = React.lazy(() => import('./Tap/containers/Tap'));
 
 function App() {
     const routes = (
