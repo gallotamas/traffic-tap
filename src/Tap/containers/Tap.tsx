@@ -11,11 +11,15 @@ import { GET_NAMESPACES_QUERY } from '../../data/getNamespacesQuery';
 import { GET_ACCESS_LOGS_SUBSCRIPTION } from '../../data/getAccessLogsSubscription';
 import { FilterNames, FilterTypes } from '../components/Filters/FilterTypes';
 import { Value } from 'baseui/select';
+import EmptyState from '../components/EmptyState/EmptyState';
+import AccessLogDetails from '../components/AccessLogDetails/AccessLogDetails';
 
 type selectedFiltersType = { [key in FilterNames]: readonly { id: string; type: string; }[] };
 
 function Tap(props: RouteComponentProps) {
     const [allAccessLogs, setAllAccessLogs] = useState<(AccessLog & Identifiable)[]>([]);
+
+    const [selectedAccessLog, setSelectedAccessLog] = useState<(AccessLog & Identifiable) | null>(null);
 
     const [isStreaming, setIsStreaming] = useState<boolean>(true);
 
@@ -103,9 +107,28 @@ function Tap(props: RouteComponentProps) {
                     </header>
                 </StyledBody>
             </Card>
-            <div className={classes.AccessLogsList}>
-                <AccessLogsList accessLogs={allAccessLogs}></AccessLogsList>
-            </div>
+            {
+                allAccessLogs.length ?
+                    <div className={classes.AccessLogs}>
+                        <div className={classes.AccessLogsList}>
+                            <AccessLogsList
+                                accessLogs={allAccessLogs}
+                                selectedLog={selectedAccessLog}
+                                selectionChanged={setSelectedAccessLog} />
+                        </div>
+                        {
+                            selectedAccessLog &&
+                            <div className={classes.AccessLogDetails}>
+                                <AccessLogDetails log={selectedAccessLog} onClose={() => {}} />
+                            </div>
+                        }
+                    </div> :
+                    <div className={classes.EmptyState}>
+                        <EmptyState
+                            header={'No access logs could be found'}
+                            description={'Change the filters or generate traffic on the selected resources'} />
+                    </div>
+            }
         </React.Fragment>
     );
 }

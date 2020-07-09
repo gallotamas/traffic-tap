@@ -1,0 +1,9 @@
+.Row {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+}
+
+label {
+    flex: 1;
+}

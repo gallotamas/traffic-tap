@@ -13,6 +13,22 @@
     text-align: end;
 }
 
-.AccessLogsList {
+.AccessLogs {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
     margin-top: 20px;
+}
+
+.AccessLogsList {
+    flex: 8;
+}
+
+.AccessLogDetails {
+    flex: 4;
+    margin-left: 10px;
+}
+
+.EmptyState {
+    margin-top: 100px;
 }

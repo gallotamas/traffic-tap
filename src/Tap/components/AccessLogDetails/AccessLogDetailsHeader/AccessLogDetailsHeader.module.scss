@@ -1,0 +1,21 @@
+.StatusCode {
+    margin-right: 5px;
+    font-weight: bold;
+
+    &.Success {
+        color: mediumseagreen;
+    }
+
+    &.Error {
+        color: orangered;
+    }
+}
+
+.Method {
+    color: cornflowerblue;
+    margin-left: 5px;
+}
+
+.Uri {
+    margin-left: 5px;
+}
