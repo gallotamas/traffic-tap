@@ -1,11 +1,11 @@
 import React, { FunctionComponent } from 'react';
-import { Select, OnChangeParams } from 'baseui/select';
-import { Namespace, SelectConfig } from '../../../models';
+import { Select } from 'baseui/select';
+import { Namespace, SelectConfig } from '../../../../models';
 
 interface ResourceFilterProps {
     namespaces: Namespace[];
     config: SelectConfig;
-    changed: (params: OnChangeParams) => any;
+    changed: (params: string[]) => any;
 }
 
 const ResourceFilter: FunctionComponent<ResourceFilterProps> = (props) => {
@@ -21,14 +21,16 @@ const ResourceFilter: FunctionComponent<ResourceFilterProps> = (props) => {
         type: 'WORKLOAD',
     }));
 
+    const options = namespaceOptions.concat(workloadOptions);
+
     return (
         <React.Fragment>
             <Select
-                options={namespaceOptions.concat(workloadOptions)}
-                value={props.config.value}
+                options={options}
+                value={options.filter(option => props.config.value.some(selected => selected === option.id ))}
                 error={!props.config.valid}
                 {...props.config.elementConfig}
-                onChange={(params) => props.changed(params)}
+                onChange={(params) => props.changed(params.value.map(v => v.id as string))}
             />
         </React.Fragment>
     );

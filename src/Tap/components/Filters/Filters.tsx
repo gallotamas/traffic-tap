@@ -1,7 +1,6 @@
 import React, { FunctionComponent } from 'react';
-import { OnChangeParams, Value } from 'baseui/select';
-import NamespacesFilter from '../../components/NamespacesFilter/NamespacesFilter';
-import ResourceFilter from '../../components/ResourceFilter/ResourceFilter';
+import NamespacesFilter from './NamespacesFilter/NamespacesFilter';
+import ResourceFilter from './ResourceFilter/ResourceFilter';
 import { Namespace } from '../../../models/Namespace';
 import { SelectConfig } from '../../../models/SelectConfig';
 import classes from './Filters.module.scss';
@@ -9,8 +8,8 @@ import { FilterNames, FilterTypes } from './FilterTypes';
 
 interface FiltersProps {
     namespaces: Namespace[];
-    selectedFilters: { [key in FilterNames]: Value };
-    onSelectedFilterChanged: (filterId: FilterNames, selectedFilters: Value) => any;
+    selectedFilters: { [key in FilterNames]: string[] };
+    onSelectedFilterChanged: (filterId: FilterNames, selectedFilters: string[]) => any;
 }
 
 const Filters: FunctionComponent<FiltersProps> = (props) => {
@@ -66,7 +65,7 @@ const Filters: FunctionComponent<FiltersProps> = (props) => {
     }
 
     function getResourceOptions() {
-        return props.namespaces.filter(ns => !!props.selectedFilters.namespaces.find((selected) => selected.id === ns.id));
+        return props.namespaces.filter(ns => !!props.selectedFilters.namespaces.find((selected) => selected === ns.id));
     }
 
     const filterElements = Object.entries(filters).map(([id, filterConfig]) => {
@@ -77,7 +76,7 @@ const Filters: FunctionComponent<FiltersProps> = (props) => {
                         ...{
                             namespaces: filterConfig.options,
                             config: filterConfig,
-                            changed: (params: OnChangeParams) => props.onSelectedFilterChanged(id as FilterNames, params.value)
+                            changed: (selected: string[]) => props.onSelectedFilterChanged(id as FilterNames, selected)
                         }
                     }
                 />

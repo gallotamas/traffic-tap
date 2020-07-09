@@ -1,11 +1,11 @@
 import React, { FunctionComponent } from 'react';
-import { Select, OnChangeParams } from 'baseui/select';
-import { Namespace, SelectConfig } from '../../../models';
+import { Select } from 'baseui/select';
+import { Namespace, SelectConfig } from '../../../../models';
 
 interface NamespacesFilterProps {
     namespaces: Namespace[];
     config: SelectConfig;
-    changed: (params: OnChangeParams) => any;
+    changed: (params: string[]) => any;
 }
 
 const NamespacesFilter: FunctionComponent<NamespacesFilterProps> = (props) => {
@@ -15,10 +15,10 @@ const NamespacesFilter: FunctionComponent<NamespacesFilterProps> = (props) => {
         <React.Fragment>
             <Select
                 options={options}
-                value={props.config.value}
+                value={options.filter(option => props.config.value.some(selected => selected === option.id ))}
                 error={!props.config.valid}
                 {...props.config.elementConfig}
-                onChange={(params) => props.changed(params)}
+                onChange={(params) => props.changed(params.value.map(v => v.id as string))}
             />
         </React.Fragment>
     );

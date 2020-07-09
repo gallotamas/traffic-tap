@@ -1,4 +1,3 @@
-import { Value } from 'baseui/select';
 import { FunctionComponent } from 'react';
 
 export interface SelectConfig {
@@ -8,7 +7,7 @@ export interface SelectConfig {
         placeholder?: string;
         multi?: boolean;
     };
-    value: Value;
+    value: string[];
     validation: {
         required: boolean;
     };
