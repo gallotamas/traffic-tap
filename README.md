@@ -1,44 +1,34 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Traffic tap
+Traffic tap enables you to monitor live access logs of the Istio sidecar proxies.
 
-## Available Scripts
+## Getting started
 
-In the project directory, you can run:
+- Follow the getting started guide to install [Backyards](https://banzaicloud.com/blog/try-backyards-how-to/).
+ - Expose the Backyards ingress locally by running `backyards dashboard`.
+ - ```sh
+   # install dependencies
+   npm i
 
-### `npm start`
+   # start the application
+   npm start
+   ```
+ - Open the application at http://127.0.0.1:3000/. NOTE: `npm start` opens the application at http://localhost:3000/ but since the auth cookie is not set there it will fail to communicate with the backend so make sure to use the first link.
+ - Generate some traffic e.g. by using `backyards demoapp load` or inspect the traffic from `backyards-system`.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Features
+- Filtering accessLogs by namespaces, resource names and destination resources. Validate filters and clear incorrect combinations.
+- Linkable filter configuration (filters are persisted in the URL as query params).
+- Start/stop the accessLog stream.
+- Show the accessLogs matching the selected resources.
+- View the details of a specific accessLog entry.
+- Automatic reconnect in case of network failures.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Known issues
 
-### `npm test`
+- **Network issues only detected once:** if the connection to the backend service fails an error message is shown for the first time but doesn’t for the second time. This is an issue with `@apollo/react-hooks` as it doesn’t update the error property for the second time. NOTE: this doesn't affect the automatic reconnect functionality as the app always tries to reconnect on network failures.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **High network traffic makes the UI less responsive:** if there is too much traffic going on then the browser might have hard time to process all the accessLogs and render them on the screen. Tip: Consider using more granular filters.<br>
+This issue could be solved by introducing a WebWorker and offloading the websocket communication to it. I would also have to introduce a global state layer for that (e.g. by using redux) and update the store in every 50-100 ms that would trigger the rerender of the data table.
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Testing
+Due to time limitations testing is missing.
