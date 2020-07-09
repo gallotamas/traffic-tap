@@ -1,3 +1,12 @@
-body {
+// Global styles, all other styles are component specific.
+
+html, body {
     font-family: system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    height:100%;
+    padding:0;
+    margin:0;
+}
+
+#root {
+    height: 100%;
 }

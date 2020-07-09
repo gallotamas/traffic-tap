@@ -17,7 +17,7 @@ const apolloClient = configureApolloClient({ basePath: '/api/graphql' });
 ReactDOM.render(
   // <React.StrictMode>
     <StyletronProvider value={engine}>
-      <BaseProvider theme={LightTheme}>
+      <BaseProvider theme={LightTheme} overrides={{ AppContainer: { style: { height: '100%'} }}}>
         <ApolloProvider client={apolloClient}>
           <BrowserRouter>
             <App />

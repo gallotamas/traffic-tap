@@ -13,8 +13,11 @@ import { FilterNames, FilterTypes } from '../components/Filters/FilterTypes';
 import EmptyState from '../components/EmptyState/EmptyState';
 import AccessLogDetails from '../components/AccessLogDetails/AccessLogDetails';
 import { parse } from 'query-string';
+import NetworkError from '../components/NetworkError/NetworkError';
 
 type SelectedFiltersType = { [key in FilterNames]: string[] };
+
+const NAMESPACES_POLL_INTERVAL = 5000;
 
 function Tap(props: RouteComponentProps) {
     const selectedFilters: SelectedFiltersType = getFiltersFromQueryString();
@@ -25,9 +28,12 @@ function Tap(props: RouteComponentProps) {
 
     const [isStreaming, setIsStreaming] = useState<boolean>(true);
 
-    const { data: { namespaces } = { namespaces: [] } } = useQuery<{ namespaces: Namespace[] }>(GET_NAMESPACES_QUERY, {pollInterval: 5000});
+    const { data: { namespaces } = { namespaces: [] }, error: queryError } = useQuery<{ namespaces: Namespace[] }>(
+        GET_NAMESPACES_QUERY,
+        { pollInterval: NAMESPACES_POLL_INTERVAL }
+    );
 
-    const { data: { accessLogs } = { accessLogs: null } } = useSubscription<{ accessLogs: AccessLog }>(
+    const { data: { accessLogs } = { accessLogs: null }, error: subscriptionError } = useSubscription<{ accessLogs: AccessLog }>(
         GET_ACCESS_LOGS_SUBSCRIPTION,
         {
             variables: { input: getVariables() },
@@ -129,6 +135,14 @@ function Tap(props: RouteComponentProps) {
                 [{ id: Math.random().toString(), ...accessLogs }].concat(prevState).slice(0, 50));
         }
     }, [accessLogs]);
+
+    if (queryError || subscriptionError) {
+        return (
+            <NetworkError
+                title={'Network error'}
+                description={'Failed to establish a connection to the backend service'} />
+        );
+    }
 
     return (
         <React.Fragment>
