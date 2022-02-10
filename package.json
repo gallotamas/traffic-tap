@@ -25,7 +25,7 @@
     "graphql": "^15.2.0",
     "graphql-tag": "^2.10.3",
     "http-proxy-middleware": "^1.0.4",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "query-string": "^6.13.1",
     "react": "^16.13.1",
     "react-debounce-render": "^6.1.0",
